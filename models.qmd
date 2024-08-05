@@ -6,8 +6,8 @@ execute:
   echo: false
 ---
 
-$$quality = \beta_{0} + \beta_{1} treatment_i + \beta_{2}alcohol + \\
-\beta_{3}sulphates + \beta_{4}citric.acid + \beta_{5}fixed.acidity + \epsilon_{i}$$
+$$quality = \beta_{0} + \beta_{1}alcohol + \\
+\beta_{2}sulphates + \beta_{3}citric.acid + \beta_{4}fixed.acidity + \epsilon_{i}$$
 
 
 
