@@ -1,0 +1,51 @@
+---
+title: "models"
+author: "Gitanjali Sheth"
+format: html
+execute: 
+  echo: false
+---
+
+$$quality = \beta_{0} + \beta_{1} treatment_i + \beta_{2}alcohol + \\
+\beta_{3}sulphates + \beta_{4}citric.acid + \beta_{5}fixed.acidity + \epsilon_{i}$$
+
+
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(brms)
+library(gtsummary)
+```
+
+```{r}
+#| label: loadData
+#| message: false
+
+# Load the dataset
+wine <- read.csv("http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv", sep = ";")
+```
+
+```{r}
+#| label: model
+#| cache: true
+#| message: false
+
+fit<- brm(data = wine,
+          formula = quality ~ alcohol + sulphates + citric.acid + fixed.acidity,
+          family = gaussian(),
+          silent = 2,
+          refresh = 0,
+          seed = 12)
+
+fixef(fit)
+
+fit |> 
+  tbl_regression(intercept = TRUE)
+
+pp_check(fit)
+```
+
