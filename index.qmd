@@ -1,7 +1,56 @@
 ---
-title: "Wine Analysis"
+title: "Predicting Wine Quality Score Based on Physicochemical Properties"
 author: "Gitanjali Sheth"
+css: styles.css
+execute: 
+  echo: false
 ---
 
-Determining the quality of wine is tricky. It is often based on subjective tastes of individuals judging them. This project aims to understand the effect of a wine's properties on its quality score. The data being used here is from the [UC Irvine dataset repository](https://archive.ics.uci.edu/dataset/186/wine+quality) which contains information such as alchohol, acidity levels, citric acid among other properties in wine samples collected from red Vinho Verde wine samples, from the north of Portugal. The goal is to model wine quality based on physicochemical tests. Based on our model, we find that all three predictors (alcohol, sulphates, and citric acid) have positive and significant effects on wine quality, suggesting that increasing these components is associated with higher wine quality scores by as much as 0.8 units. 
+Determining the quality of wine is tricky. It is often based on subjective tastes of individuals judging them. This project aims to understand the effect of a wine's properties on its quality score.
+
+The data being used here is from the [UC Irvine dataset repository](https://archive.ics.uci.edu/dataset/186/wine+quality) which contains information such as alcohol, sulphates, acidity levels, citric acid among other properties in wine samples collected from red Vinho Verde wine samples, from the north of Portugal. 
+
+The goal is to model wine quality based on physicochemical tests. Based on our model, we find that all three predictors (alcohol, sulphates, and citric acid) have positive and significant effects on wine quality, suggesting that increasing these components is associated with higher wine quality scores by as much as 0.8 units. 
+
+<style>
+img {
+  width: 100%;  /* Adjust as needed, e.g., 80%, 50%, etc. */
+  height: auto; /* Maintains aspect ratio */
+}
+
+/* Increase the overall font size */
+body {
+  font-size: 22px;
+}
+
+/* Increase the font size for headers */
+h1, h2, h3, h4, h5, h6 {
+  font-size: 1.2em; /* Adjust as needed */
+}
+
+/* Increase the font size for plot labels */
+text {
+  font-size: 20px;
+}
+</style>
+
+```{r}
+#| label: setup
+library(png)
+library(grid)
+
+```
+
+### The most positive impact was seen with an increase in alcohol and sulphates quantities combined as shown on this graph below. 
+```{r}
+img_combined <- png::readPNG("plot.png")
+grid::grid.raster(img_combined)
+
+```
+
+### The plots below showcase the effect of each physicochemical property separately. As you can see citric acid has minimal positive effect on the quality score.
+```{r}
+img_sep <- png::readPNG("grid_plot.png")
+grid::grid.raster(img_sep)
+```
 

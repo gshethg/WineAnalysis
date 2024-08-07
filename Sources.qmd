@@ -1,0 +1,9 @@
+---
+title: "Sources"
+author: "Gitanjali Sheth"
+format: html
+---
+
+The data used in this project was sourced from [UC Irvine dataset repository](https://archive.ics.uci.edu/dataset/186/wine+quality) which contains attributed of wines collected from Vinho Verde region in northern Portugal. 
+
+The data was fairly clean and easy to use. All attributes when modeled had a positive effect on the quality although the highest were alcohol and the sulphate levels. That is what I eventually used for plotting purposes.
