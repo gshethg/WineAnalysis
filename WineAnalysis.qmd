@@ -8,7 +8,7 @@ execute:
 
 ```{r}
 #|label: setup
-#|mmessage: false
+#|message: false
 
 library(tidyverse)
 library(brms)
@@ -154,7 +154,6 @@ ggsave("grid_plot.png", plot = grid_plot, width = 12, height = 8)
 ```
 
 ```{r}
-#| cache: true
 #| label: combinedPlot
 
 predicted_data <- wine_data %>%
@@ -184,4 +183,51 @@ ggsave("plot.png", plot = p, width = 6, height = 4)
 ```
 
 
+```{r}
+#| label: facetByCitricAcid
+
+# Bin the citric.acid variable into fewer categories
+wine_data <- wine_data %>%
+  mutate(citric_acid_bin = cut(citric.acid, breaks = 3, labels = c("Low", "Medium", "High")))
+
+# Create a grid of predictor values with fewer levels for citric.acid
+predicted_data <- wine_data %>%
+  data_grid(
+    alcohol = seq(min(wine_data$alcohol), max(wine_data$alcohol), length.out = 10),
+    sulphates = seq(min(wine_data$sulphates), max(wine_data$sulphates), length.out = 10),
+    citric_acid_bin = unique(wine_data$citric_acid_bin)
+  ) %>%
+  mutate(citric.acid = case_when(
+    citric_acid_bin == "Low" ~ min(wine_data$citric.acid),
+    citric_acid_bin == "Medium" ~ median(wine_data$citric.acid),
+    citric_acid_bin == "High" ~ max(wine_data$citric.acid)
+  )) %>%
+  add_epred_draws(wine_model)
+
+
+# Interaction Plot with citric.acid as a facet
+p <- ggplot(predicted_data, aes(x = alcohol, y = .epred, color = sulphates)) +
+  geom_line(aes(group = sulphates), alpha = 0.5) +
+  geom_point(data = wine_data, aes(y = quality), color = "red", alpha = 0.3) +
+  scale_color_viridis_c() +
+  labs(
+    x = "Alcohol Content",
+    y = "Predicted Quality",
+    color = "Sulphates",
+    title = "Interaction between Alcohol Content, \nSulphates, and Citric Acid",
+    subtitle = "Higher levels of both alcohol and sulphates are associated with higher \npredicted quality, especially in wines with higher citric acid content."
+  ) +
+  facet_wrap(~ citric_acid_bin, scales = "free_y") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12)
+  )
+
+# Display the plot
+print(p)
+
+ggsave("citric_facet_plot.png", plot = p, width = 6, height = 4)
+
+```
 

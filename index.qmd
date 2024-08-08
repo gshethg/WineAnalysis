@@ -40,17 +40,12 @@ library(png)
 library(grid)
 
 ```
+### The plot summarizes the findings
 
-### The most positive impact was seen with an increase in alcohol and sulphates quantities combined as shown on this graph below. 
 ```{r}
-img_combined <- png::readPNG("plot.png")
+img_combined <- png::readPNG("citric_facet_plot.png")
 grid::grid.raster(img_combined)
 
 ```
 
-### The plots below showcase the effect of each physicochemical property separately. As you can see citric acid has minimal positive effect on the quality score.
-```{r}
-img_sep <- png::readPNG("grid_plot.png")
-grid::grid.raster(img_sep)
-```
 
